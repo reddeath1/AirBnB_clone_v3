@@ -1,9 +1,8 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 """
-Created on Tue Sep  1 14:42:23 2020
 @authors: Frank Galos
-          Mauricio Olarte
+          Uchechukwu Ogbodo
 """
 from os import getenv
 from flask import Flask, jsonify, Blueprint
