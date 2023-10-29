@@ -14,7 +14,7 @@ from models.city import City
 @app_views.route('/states/<string:state_id>/cities', methods=['GET', 'POST'],
                  strict_slashes=False)
 def cities(state_id):
-    """Create a new view for City objects that handles all default
+    """Create a new view for City objects that handle all default
     RestFul API actions.
     """
     state = storage.get('State', state_id)

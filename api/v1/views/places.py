@@ -14,7 +14,7 @@ from models.city import City
 @app_views.route('/cities/<string:city_id>/places', methods=['GET', 'POST'],
                  strict_slashes=False)
 def places(city_id):
-    """Create a new view for City objects that handles all default
+    """Create a new view for City objects that handle all default
     RestFul API actions.
     """
     city = storage.get('City', city_id)
@@ -41,7 +41,7 @@ def places(city_id):
 @app_views.route('/places/<string:place_id>',
                  methods=['GET', 'PUT', 'DELETE'], strict_slashes=False)
 def get_place_id(place_id):
-    """Retrieves a city object with a specific id"""
+    """Retrieve a city object with a specific id"""
     place = storage.get('Place', place_id)
     if place is None:
         abort(404)

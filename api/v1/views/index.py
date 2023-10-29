@@ -18,7 +18,7 @@ def get_status():
 
 @app_views.route('/stats', methods=['GET'], strict_slashes=False)
 def object_status():
-    """Create an endpoint that retrieves the number of each objects by type
+    """Create a endpoint that retrieves the number of each objects by type
     """
     objects = {"amenities": 'Amenity', "cities": 'City', "places": 'Place',
                "reviews": 'Review', "states": 'State', "users": 'User'}
