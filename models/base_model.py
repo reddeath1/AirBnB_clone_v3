@@ -13,7 +13,7 @@ Base = declarative_base()
 class BaseModel:
     """this class will define all common attributes for the entire project
     """
-    id = Column(String(60), unique=True, nullable=False, primary_key=True)
+    id = Column(String(60), unique=True, nullable=True, primary_key=True)
     created_at = Column(DateTime, nullable=False, default=(datetime.utcnow()))
     updated_at = Column(DateTime, nullable=False, default=(datetime.utcnow()))
 

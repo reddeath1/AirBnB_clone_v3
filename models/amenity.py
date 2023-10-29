@@ -9,5 +9,5 @@ from models.place import place_amenity
 class Amenity(BaseModel, Base):
     """Amenity class that inherits from BaseModel and Base"""
     __tablename__ = "amenities"
-    name = Column(String(128), nullable=False)
+    name = Column(String(128), nullable=True)
     place_amenities = relationship("Place", secondary=place_amenity)

@@ -1,16 +1,18 @@
 #!/usr/bin/python3
 """ new class for sqlAlchemy """
 from os import getenv
-from sqlalchemy.orm import sessionmaker, scoped_session
-from models.state import State
+
+import models
+from models.amenity import Amenity
+from models.base_model import Base
 from models.city import City
-from models.user import User
 from models.place import Place
 from models.review import Review
-from models.amenity import Amenity
-from sqlalchemy import (create_engine)
-from sqlalchemy.ext.declarative import declarative_base
-from models.base_model import Base
+from models.state import State
+from models.user import User
+import sqlalchemy
+from sqlalchemy import create_engine
+from sqlalchemy.orm import scoped_session, sessionmaker
 
 
 class DBStorage:
@@ -19,6 +21,7 @@ class DBStorage:
     __session = None
 
     def __init__(self):
+        self.session = None
         user = getenv("HBNB_MYSQL_USER")
         passwd = getenv("HBNB_MYSQL_PWD")
         db = getenv("HBNB_MYSQL_DB")
@@ -69,6 +72,28 @@ class DBStorage:
         """
         if obj:
             self.session.delete(obj)
+
+    def get(self, cls, id):
+        """method to retrieve one object
+        Return the object based on the class name and its ID, or
+        None if not found
+        """
+        if type(cls) == str:
+            cls = classes.get(cls)
+        if cls is None:
+            return None
+        return self.__session.query(cls).filter(cls.id == id).first()
+
+    def count(self, cls=None):
+        """A method to count the number of objects in storage
+        Returns the number of objects in storage matching the given class name
+        If no name is passed, returns the count of all objects in storage
+        """
+        if type(cls) is str:
+            cls = classes.get(cls)
+        if cls is None:
+            return len(self.all())
+        return len(self.all(cls))
 
     def reload(self):
         """config
