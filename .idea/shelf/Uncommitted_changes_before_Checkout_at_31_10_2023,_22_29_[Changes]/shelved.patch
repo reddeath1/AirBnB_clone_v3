@@ -1,0 +1,95 @@
+Index: api/v1/views/amenities.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#!/usr/bin/python3\n'''\nCreates a view for Amenity objects - handles all default RESTful API actions.\n'''\n\n# Import necessary modules\nfrom flask import abort, jsonify, request\nfrom models.amenity import Amenity\nfrom api.v1.views import app_views\nfrom models import storage\n\n\n# Route for retrieving all Amenity objects\n@app_views.route('/amenities', methods=['GET'], strict_slashes=False)\ndef get_all_amenities():\n    '''Retrieves the list of all Amenity objects'''\n    # Get all Amenity objects from the storage\n    amenities = storage.all(Amenity).values()\n    # Convert objects to dictionaries and jsonify the list\n    return jsonify([amenity.to_dict() for amenity in amenities])\n\n\n# Route for retrieving a specific Amenity object by ID\n@app_views.route('/amenities/<amenity_id>',\n                 methods=['GET'], strict_slashes=False)\ndef get_amenity(amenity_id):\n    '''Retrieves an Amenity object'''\n    # Get the Amenity object with the given ID from the storage\n    amenity = storage.get(Amenity, amenity_id)\n    if amenity:\n        # Return the Amenity object in JSON format\n        return jsonify(amenity.to_dict())\n    else:\n        # Return 404 error if the Amenity object is not found\n        abort(404)\n\n\n# Route for deleting a specific Amenity object by ID\n@app_views.route('/amenities/<amenity_id>', methods=['DELETE'])\ndef delete_amenity(amenity_id):\n    '''Deletes an Amenity object'''\n    # Get the Amenity object with the given ID from the storage\n    amenity = storage.get(Amenity, amenity_id)\n    if amenity:\n        # Delete the Amenity object from the storage and save changes\n        storage.delete(amenity)\n        storage.save()\n        # Return an empty JSON with 200 status code\n        return jsonify({}), 200\n    else:\n        # Return 404 error if the Amenity object is not found\n        abort(404)\n\n\n# Route for creating a new Amenity object\n@app_views.route('/amenities', methods=['POST'], strict_slashes=False)\ndef create_amenity():\n    '''Creates an Amenity object'''\n    if not request.get_json():\n        # Return 400 error if the request data is not in JSON format\n        abort(400, 'Not a JSON')\n\n    # Get the JSON data from the request\n    data = request.get_json()\n    if 'name' not in data:\n        # Return 400 error if 'name' key is missing in the JSON data\n        abort(400, 'Missing name')\n\n    # Create a new Amenity object with the JSON data\n    amenity = Amenity(**data)\n    # Save the Amenity object to the storage\n    amenity.save()\n    # Return the newly created Amenity\n    #   object in JSON format with 201 status code\n    return jsonify(amenity.to_dict()), 201\n\n\n# Route for updating an existing Amenity object by ID\n@app_views.route('/amenities/<amenity_id>', methods=['PUT'],\n                 strict_slashes=False)\ndef update_amenity(amenity_id):\n    '''Updates an Amenity object'''\n    # Get the Amenity object with the given ID from the storage\n    amenity = storage.get(Amenity, amenity_id)\n    if amenity:\n        # Return 400 error if the request data is not in JSON format\n        if not request.get_json():\n            abort(400, 'Not a JSON')\n\n        # Get the JSON data from the request\n        data = request.get_json()\n        ignore_keys = ['id', 'created_at', 'updated_at']\n        # Update the attributes of the Amenity object with the JSON data\n        for key, value in data.items():\n            if key not in ignore_keys:\n                setattr(amenity, key, value)\n\n        # Save the updated Amenity object to the storage\n        amenity.save()\n        # Return the updated Amenity object in JSON format with 200 status code\n        return jsonify(amenity.to_dict()), 200\n    else:\n        # Return 404 error if the Amenity object is not found\n        abort(404)\n\n\n# Error Handlers:\n@app_views.errorhandler(404)\ndef not_found(error):\n    '''Returns 404: Not Found'''\n    # Return a JSON response for 404 error\n    response = {'error': 'Not found'}\n    return jsonify(response), 404\n\n\n@app_views.errorhandler(400)\ndef bad_request(error):\n    '''Return Bad Request message for illegal requests to the API.'''\n    # Return a JSON response for 400 error\n    response = {'error': 'Bad Request'}\n    return jsonify(response), 400\n\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/api/v1/views/amenities.py b/api/v1/views/amenities.py
+--- a/api/v1/views/amenities.py	
++++ b/api/v1/views/amenities.py	
+@@ -1,7 +1,7 @@
+ #!/usr/bin/python3
+-'''
++"""
+ Creates a view for Amenity objects - handles all default RESTful API actions.
+-'''
++"""
+ 
+ # Import necessary modules
+ from flask import abort, jsonify, request
+@@ -13,7 +13,7 @@
+ # Route for retrieving all Amenity objects
+ @app_views.route('/amenities', methods=['GET'], strict_slashes=False)
+ def get_all_amenities():
+-    '''Retrieves the list of all Amenity objects'''
++    """Retrieves the list of all Amenity objects"""
+     # Get all Amenity objects from the storage
+     amenities = storage.all(Amenity).values()
+     # Convert objects to dictionaries and jsonify the list
+@@ -24,7 +24,7 @@
+ @app_views.route('/amenities/<amenity_id>',
+                  methods=['GET'], strict_slashes=False)
+ def get_amenity(amenity_id):
+-    '''Retrieves an Amenity object'''
++    """Retrieves an Amenity object"""
+     # Get the Amenity object with the given ID from the storage
+     amenity = storage.get(Amenity, amenity_id)
+     if amenity:
+@@ -38,7 +38,7 @@
+ # Route for deleting a specific Amenity object by ID
+ @app_views.route('/amenities/<amenity_id>', methods=['DELETE'])
+ def delete_amenity(amenity_id):
+-    '''Deletes an Amenity object'''
++    """Deletes an Amenity object"""
+     # Get the Amenity object with the given ID from the storage
+     amenity = storage.get(Amenity, amenity_id)
+     if amenity:
+@@ -55,7 +55,7 @@
+ # Route for creating a new Amenity object
+ @app_views.route('/amenities', methods=['POST'], strict_slashes=False)
+ def create_amenity():
+-    '''Creates an Amenity object'''
++    """Creates an Amenity object"""
+     if not request.get_json():
+         # Return 400 error if the request data is not in JSON format
+         abort(400, 'Not a JSON')
+@@ -79,7 +79,7 @@
+ @app_views.route('/amenities/<amenity_id>', methods=['PUT'],
+                  strict_slashes=False)
+ def update_amenity(amenity_id):
+-    '''Updates an Amenity object'''
++    """Updates an Amenity object"""
+     # Get the Amenity object with the given ID from the storage
+     amenity = storage.get(Amenity, amenity_id)
+     if amenity:
+@@ -107,7 +107,7 @@
+ # Error Handlers:
+ @app_views.errorhandler(404)
+ def not_found(error):
+-    '''Returns 404: Not Found'''
++    """Returns 404: Not Found"""
+     # Return a JSON response for 404 error
+     response = {'error': 'Not found'}
+     return jsonify(response), 404
+@@ -115,7 +115,7 @@
+ 
+ @app_views.errorhandler(400)
+ def bad_request(error):
+-    '''Return Bad Request message for illegal requests to the API.'''
++    """Return Bad Request message for illegal requests to the API."""
+     # Return a JSON response for 400 error
+     response = {'error': 'Bad Request'}
+     return jsonify(response), 400
+Index: file.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/file.json b/file.json
+deleted file mode 100644
+--- a/file.json	
++++ /dev/null	
+@@ -1,1 +0,0 @@
+-{"User.3f0e2574-2a33-431e-ba24-ac41579206e5": {"id": "3f0e2574-2a33-431e-ba24-ac41579206e5", "created_at": "2023-09-20T01:39:12.700840", "updated_at": "2023-09-20T01:39:12.700840", "__class__": "User"}, "User.d78cc002-f3b2-4b22-b762-58eebff241f6": {"id": "d78cc002-f3b2-4b22-b762-58eebff241f6", "created_at": "2023-09-20T01:39:34.308971", "updated_at": "2023-09-20T01:39:34.308971", "name": "Romaric", "__class__": "User"}, "User.69d0c5c8-a72d-4f68-bb95-431a660afb92": {"id": "69d0c5c8-a72d-4f68-bb95-431a660afb92", "created_at": "2023-09-20T01:39:47.237087", "updated_at": "2023-09-20T01:39:47.237087", "name": "Romaric", "__class__": "User"}}
+\ No newline at end of file

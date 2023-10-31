@@ -1,0 +1,57 @@
+Index: api/v1/views/cities.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#!/usr/bin/python3\n'''\nCreate a new view for City objects - handles all default RESTful API actions.\n'''\n\n# Import necessary modules\nfrom flask import abort, jsonify, request\n# Import the State and City models\nfrom models.state import State\nfrom models.city import City\nfrom api.v1.views import app_views\nfrom models import storage\n\n\n# Route for retrieving all City objects of a specific State\n@app_views.route('/states/<state_id>/cities', methods=['GET'],\n                 strict_slashes=False)\ndef get_cities_by_state(state_id):\n    '''\n    Retrieves the list of all City objects of a State.\n    '''\n    # Get the State object with the given ID from the storage\n    state = storage.get(State, state_id)\n    if not state:\n        # Return 404 error if the State object is not found\n        abort(404)\n\n    # Get all City objects associated with\n    #   the State and convert them to dictionaries\n    cities = [city.to_dict() for city in state.cities]\n    return jsonify(cities)\n\n\n# Route for retrieving a specific City object by ID\n@app_views.route('/cities/<city_id>', methods=['GET'], strict_slashes=False)\ndef get_city(city_id):\n    '''\n    Retrieves a City object.\n    '''\n    # Get the City object with the given ID from the storage\n    city = storage.get(City, city_id)\n    if city:\n        # Return the City object in JSON format\n        return jsonify(city.to_dict())\n    else:\n        # Return 404 error if the City object is not found\n        abort(404)\n\n\n# Route for deleting a specific City object by ID\n@app_views.route('/cities/<city_id>', methods=['DELETE'])\ndef delete_city(city_id):\n    '''\n    Deletes a City object.\n    '''\n    # Get the City object with the given ID from the storage\n    city = storage.get(City, city_id)\n    if city:\n        # Delete the City object from the storage and save changes\n        storage.delete(city)\n        storage.save()\n        # Return an empty JSON with 200 status code\n        return jsonify({}), 200\n    else:\n        # Return 404 error if the City object is not found\n        abort(404)\n\n\n# Route for creating a new City object under a specific State\n@app_views.route('/states/<state_id>/cities', methods=['POST'],\n                 strict_slashes=False)\ndef create_city(state_id):\n    '''\n    Creates a City object.\n    '''\n    # Get the State object with the given ID from the storage\n    state = storage.get(State, state_id)\n    if not state:\n        # Return 404 error if the State object is not found\n        abort(404)\n\n    # Check if the request data is in JSON format\n    if not request.get_json():\n        # Return 400 error if the request data is not in JSON format\n        abort(400, 'Not a JSON')\n\n    # Get the JSON data from the request\n    data = request.get_json()\n    if 'name' not in data:\n        # Return 400 error if 'name' key is missing in the JSON data\n        abort(400, 'Missing name')\n\n    # Assign the 'state_id' key in the JSON data\n    data['state_id'] = state_id\n    # Create a new City object with the JSON data\n    city = City(**data)\n    # Save the City object to the storage\n    city.save()\n    # Return the newly created City object in JSON format with 201 status code\n    return jsonify(city.to_dict()), 201\n\n\n# Route for updating an existing City object by ID\n@app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)\ndef update_city(city_id):\n    '''\n    Updates a City object.\n    '''\n    # Get the City object with the given ID from the storage\n    city = storage.get(City, city_id)\n    if city:\n        # Check if the request data is in JSON format\n        if not request.get_json():\n            # Return 400 error if the request data is not in JSON format\n            abort(400, 'Not a JSON')\n\n        # Get the JSON data from the request\n        data = request.get_json()\n        ignore_keys = ['id', 'state_id', 'created_at', 'updated_at']\n        # Update the attributes of the City object with the JSON data\n        for key, value in data.items():\n            if key not in ignore_keys:\n                setattr(city, key, value)\n\n        # Save the updated City object to the storage\n        city.save()\n        # Return the updated City object in JSON format with 200 status code\n        return jsonify(city.to_dict()), 200\n    else:\n        # Return 404 error if the City object is not found\n        abort(404)\n\n\n# Error Handlers:\n@app_views.errorhandler(404)\ndef not_found(error):\n    '''\n    404: Not Found.\n    '''\n    # Return a JSON response for 404 error\n    return jsonify({'error': 'Not found'}), 404\n\n\n@app_views.errorhandler(400)\ndef bad_request(error):\n    '''\n    Return Bad Request message for illegal requests to API.\n    '''\n    # Return a JSON response for 400 error\n    return jsonify({'error': 'Bad Request'}), 400\n\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/api/v1/views/cities.py b/api/v1/views/cities.py
+--- a/api/v1/views/cities.py	
++++ b/api/v1/views/cities.py	
+@@ -70,9 +70,9 @@
+ @app_views.route('/states/<state_id>/cities', methods=['POST'],
+                  strict_slashes=False)
+ def create_city(state_id):
+-    '''
++    """
+     Creates a City object.
+-    '''
++    """
+     # Get the State object with the given ID from the storage
+     state = storage.get(State, state_id)
+     if not state:
+@@ -103,9 +103,9 @@
+ # Route for updating an existing City object by ID
+ @app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
+ def update_city(city_id):
+-    '''
++    """
+     Updates a City object.
+-    '''
++    """
+     # Get the City object with the given ID from the storage
+     city = storage.get(City, city_id)
+     if city:
+@@ -134,18 +134,18 @@
+ # Error Handlers:
+ @app_views.errorhandler(404)
+ def not_found(error):
+-    '''
++    """
+     404: Not Found.
+-    '''
++    """
+     # Return a JSON response for 404 error
+     return jsonify({'error': 'Not found'}), 404
+ 
+ 
+ @app_views.errorhandler(400)
+ def bad_request(error):
+-    '''
++    """
+     Return Bad Request message for illegal requests to API.
+-    '''
++    """
+     # Return a JSON response for 400 error
+     return jsonify({'error': 'Bad Request'}), 400
+ 

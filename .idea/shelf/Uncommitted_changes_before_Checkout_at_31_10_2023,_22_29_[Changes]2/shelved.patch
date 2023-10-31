@@ -1,0 +1,12 @@
+Index: file.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/file.json b/file.json
+deleted file mode 100644
+--- a/file.json	(revision b4435de8c567651474485fb989d27f313b083784)
++++ /dev/null	(revision b4435de8c567651474485fb989d27f313b083784)
+@@ -1,1 +0,0 @@
+-{"User.3f0e2574-2a33-431e-ba24-ac41579206e5": {"id": "3f0e2574-2a33-431e-ba24-ac41579206e5", "created_at": "2023-09-20T01:39:12.700840", "updated_at": "2023-09-20T01:39:12.700840", "__class__": "User"}, "User.d78cc002-f3b2-4b22-b762-58eebff241f6": {"id": "d78cc002-f3b2-4b22-b762-58eebff241f6", "created_at": "2023-09-20T01:39:34.308971", "updated_at": "2023-09-20T01:39:34.308971", "name": "Romaric", "__class__": "User"}, "User.69d0c5c8-a72d-4f68-bb95-431a660afb92": {"id": "69d0c5c8-a72d-4f68-bb95-431a660afb92", "created_at": "2023-09-20T01:39:47.237087", "updated_at": "2023-09-20T01:39:47.237087", "name": "Romaric", "__class__": "User"}}
+\ No newline at end of file
