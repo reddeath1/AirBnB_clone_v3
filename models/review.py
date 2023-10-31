@@ -1,13 +1,30 @@
-#!/usr/bin/python3
-""" Review module for the HBNB project """
+#!/usr/bin/python
+""" holds class Review"""
+import models
 from models.base_model import BaseModel, Base
+from os import getenv
+import sqlalchemy
 from sqlalchemy import Column, String, ForeignKey
-from sqlalchemy.orm import relationship
 
 
 class Review(BaseModel, Base):
-    """ A class to store review information """
-    __tablename__ = "reviews"
-    place_id = Column(String(60), ForeignKey('places.id'), nullable=True)
-    user_id = Column(String(60), ForeignKey('users.id'), nullable=True)
-    text = Column(String(1024), nullable=True)
+    """Representation of Review """
+    if models.storage_t == 'db':
+        __tablename__ = 'reviews'
+        place_id = Column(String(60),
+                          ForeignKey('places.id', onupdate='CASCADE',
+                                     ondelete='CASCADE'),
+                          nullable=False)
+        user_id = Column(String(60),
+                         ForeignKey('users.id', onupdate='CASCADE',
+                                    ondelete='CASCADE'),
+                         nullable=False)
+        text = Column(String(1024), nullable=False)
+    else:
+        place_id = ""
+        user_id = ""
+        text = ""
+
+    def __init__(self, *args, **kwargs):
+        """initializes Review"""
+        super().__init__(*args, **kwargs)
