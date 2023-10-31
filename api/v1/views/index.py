@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 <<<<<<< HEAD
+<<<<<<< HEAD
 # -*- coding: utf-8 -*-
 """
 @authors: Frank Galos.
@@ -27,6 +28,8 @@ def object_status():
         objects[key] = storage.count(value)
     return jsonify(objects)
 =======
+=======
+>>>>>>> origin/main
 '''
 Create a route `/status` on the object app_views.
 '''
@@ -60,4 +63,7 @@ def get_stats():
         'users': storage.count('User')
     }
     return jsonify(stats)
+<<<<<<< HEAD
 >>>>>>> e0ff08e (updated)
+=======
+>>>>>>> origin/main
