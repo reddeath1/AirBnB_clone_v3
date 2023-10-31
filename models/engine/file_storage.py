@@ -78,3 +78,33 @@ class FileStorage:
         else:
             return {k: v for k, v in self.__objects.items()
                     if v.__class__ == cls}
+
+
+    def get(self, cls, id):
+        """
+        get an object
+        Args:
+            cls (str): class name
+            id (str): object ID
+        Returns:
+            an object based on class name and its ID
+        """
+        obj_dict = self.all(cls)
+        for k, v in obj_dict.items():
+            matchstring = cls + '.' + id
+            if k == matchstring:
+                return v
+
+        return None
+
+    def count(self, cls=None):
+        """
+        count number of objects in a class (if given)
+        Args:
+            cls (str): class name
+        Returns:
+            number of objects in class, if no class name given
+            return total number of objects in database
+        """
+        obj_dict = self.all(cls)
+        return len(obj_dict)    

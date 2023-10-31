@@ -1,7 +1,7 @@
 #!/usr/bin/python3
-'''
+"""
 Create a new view for Review objects - handles all default RESTful API
-'''
+"""
 
 # Import necessary modules
 from flask import abort, jsonify, request
@@ -16,9 +16,9 @@ from models import storage
 @app_views.route('/places/<place_id>/reviews', methods=['GET'],
                  strict_slashes=False)
 def get_reviews_by_place(place_id):
-    '''
+    """
     Retrieves the list of all Review objects of a Place
-    '''
+    """
     # Get the Place object with the given ID from the storage
     place = storage.get(Place, place_id)
     if not place:
@@ -34,9 +34,9 @@ def get_reviews_by_place(place_id):
 @app_views.route('/reviews/<review_id>', methods=['GET'],
                  strict_slashes=False)
 def get_review(review_id):
-    '''
+    """
     Retrieves a Review object
-    '''
+    """
     # Get the Review object with the given ID from the storage
     review = storage.get(Review, review_id)
     if review:
@@ -50,9 +50,9 @@ def get_review(review_id):
 # Route for deleting a specific Review object by ID
 @app_views.route('/reviews/<review_id>', methods=['DELETE'])
 def delete_review(review_id):
-    '''
+    """
     Deletes a Review object
-    '''
+    """
     # Get the Review object with the given ID from the storage
     review = storage.get(Review, review_id)
     if review:
@@ -70,9 +70,9 @@ def delete_review(review_id):
 @app_views.route('/places/<place_id>/reviews', methods=['POST'],
                  strict_slashes=False)
 def create_review(place_id):
-    '''
+    """
     Creates a Review object
-    '''
+    """
     # Get the Place object with the given ID from the storage
     place = storage.get(Place, place_id)
     if not place:
@@ -112,9 +112,9 @@ def create_review(place_id):
 # Route for updating an existing Review object by ID
 @app_views.route('/reviews/<review_id>', methods=['PUT'], strict_slashes=False)
 def update_review(review_id):
-    '''
+    """
     Updates a Review object
-    '''
+    """
     # Get the Review object with the given ID from the storage
     review = storage.get(Review, review_id)
     if review:
@@ -143,9 +143,9 @@ def update_review(review_id):
 # Error Handlers:
 @app_views.errorhandler(404)
 def not_found(error):
-    '''
+    """
     Returns 404: Not Found
-    '''
+    """
     # Return a JSON response for 404 error
     response = {'error': 'Not found'}
     return jsonify(response), 404
@@ -153,9 +153,9 @@ def not_found(error):
 
 @app_views.errorhandler(400)
 def bad_request(error):
-    '''
+    """
     Return Bad Request message for illegal requests to the API
-    '''
+    """
     # Return a JSON response for 400 error
     response = {'error': 'Bad Request'}
     return jsonify(response), 400

@@ -1,7 +1,7 @@
 #!/usr/bin/python3
-'''
+"""
 Create a view for Place objects - handles all default RESTful API actions
-'''
+"""
 
 # Import necessary modules
 from flask import abort, jsonify, request
@@ -19,9 +19,9 @@ from models import storage
 @app_views.route('/cities/<city_id>/places', methods=['GET'],
                  strict_slashes=False)
 def get_places_by_city(city_id):
-    '''
+    """
     Retrieves the list of all Place objects of a City
-    '''
+    """
     # Get the City object with the given ID from the storage
     city = storage.get(City, city_id)
     if not city:
@@ -37,9 +37,9 @@ def get_places_by_city(city_id):
 @app_views.route('/places/<place_id>', methods=['GET'],
                  strict_slashes=False)
 def get_place(place_id):
-    '''
+    """
     Retrieves a Place object
-    '''
+    """
     # Get the Place object with the given ID from the storage
     place = storage.get(Place, place_id)
     if place:
@@ -53,9 +53,9 @@ def get_place(place_id):
 # Route for deleting a specific Place object by ID
 @app_views.route('/places/<place_id>', methods=['DELETE'])
 def delete_place(place_id):
-    '''
+    """
     Deletes a Place object
-    '''
+    """
     # Get the Place object with the given ID from the storage
     place = storage.get(Place, place_id)
     if place:
@@ -73,9 +73,9 @@ def delete_place(place_id):
 @app_views.route('/cities/<city_id>/places', methods=['POST'],
                  strict_slashes=False)
 def create_place(city_id):
-    '''
+    """
     Creates a Place object
-    '''
+    """
     # Get the City object with the given ID from the storage
     city = storage.get(City, city_id)
     if not city:
@@ -115,9 +115,9 @@ def create_place(city_id):
 # Route for updating an existing Place object by ID
 @app_views.route('/places/<place_id>', methods=['PUT'], strict_slashes=False)
 def update_place(place_id):
-    '''
+    """
     Updates a Place object
-    '''
+    """
     # Get the Place object with the given ID from the storage
     place = storage.get(Place, place_id)
     if place:
@@ -146,9 +146,9 @@ def update_place(place_id):
 # Error Handlers:
 @app_views.errorhandler(404)
 def not_found(error):
-    '''
+    """
     Returns 404: Not Found
-    '''
+    """
     # Return a JSON response for 404 error
     response = {'error': 'Not found'}
     return jsonify(response), 404
@@ -156,9 +156,9 @@ def not_found(error):
 
 @app_views.errorhandler(400)
 def bad_request(error):
-    '''
+    """
     Return Bad Request message for illegal requests to the API
-    '''
+    """
     # Return a JSON response for 400 error
     response = {'error': 'Bad Request'}
     return jsonify(response), 400
