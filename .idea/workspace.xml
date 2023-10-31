@@ -49,7 +49,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "Rebasing main",
-    "last_opened_file_path": "/Users/reddeath/Sites/AirBnB_clone_v3/tests",
+    "last_opened_file_path": "/Users/reddeath/Sites/AirBnB_clone_v3/api/v1",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -64,6 +64,8 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/api/v1" />
+      <recent name="$PROJECT_DIR$/api" />
       <recent name="$PROJECT_DIR$/tests" />
       <recent name="$PROJECT_DIR$" />
     </key>
@@ -214,7 +216,7 @@
       <option name="presentableId" value="Default" />
       <updated>1698596321063</updated>
       <workItem from="1698596322095" duration="12297000" />
-      <workItem from="1698780300809" duration="6310000" />
+      <workItem from="1698780300809" duration="7224000" />
     </task>
     <servers />
   </component>
