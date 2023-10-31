@@ -4,6 +4,7 @@
 @authors: Frank Galos.
           Uchechukwu Ogbodo
 """
+
 from flask import jsonify
 from api.v1.views import app_views
 from models import storage
@@ -16,7 +17,6 @@ def api_status():
     '''
     response = {'status': 'OK'}
     return jsonify(response)
-
 
 @app_views.route('/stats', methods=['GET'])
 def get_stats():
