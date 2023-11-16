@@ -22,6 +22,9 @@ class FileStorage:
         """Adds new object to storage dictionary"""
         self.all().update({obj.to_dict()['__class__'] + '.' + obj.id: obj})
 
+    def close(self):
+        """call reload() method for deserializing the JSON file to objects"""
+        self.reload()
 
     def delete(self, obj=None):
         """public instance method to delete obj from __objects
